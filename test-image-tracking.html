@@ -4,7 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Test Image Tracking</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://github.com/AR-js-org/AR.js/releases/download/3.4.5/ar-threex.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="/static/js/init/image_tracking.js"></script>
+    <script src="/static/js/screenshot.js"></script>
   </head>
-  <body></body>
+  <body>
+    <canvas width="640" height="480" style="visibility: hidden" id="doubleImage"></canvas>
+    <div class="arjs-loader">
+      <div class="arjs-loader-spinner"></div>
+    </div>
+  </body>
 </html>
