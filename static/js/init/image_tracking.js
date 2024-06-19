@@ -1,6 +1,3 @@
-import * as THREE from "three";
-import * as THREEx from "../build/ar-threex.js";
-
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
