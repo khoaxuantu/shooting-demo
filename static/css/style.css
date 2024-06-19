@@ -12,6 +12,20 @@ a:hover {
   text-decoration: underline;
 }
 
+#screenshot {
+  border-radius: 50%;
+  width: 25%;
+  max-width: 48px;
+  aspect-ratio: 1;
+  position: fixed;
+  z-index: 2;
+  bottom: 2rem;
+  cursor: pointer;
+  right: 50dvw;
+  left: 50dvw;
+  border: 5px solid;
+}
+
 arjs-loader {
   margin: 0 auto;
   width: 100%;
