@@ -1,3 +1,6 @@
+const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+const height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
@@ -11,7 +14,7 @@ const mixers = [];
 renderer.setPixelRatio(window.devicePixelRatio);
 
 renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width, height);
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.top = "0px";
 renderer.domElement.style.left = "0px";
@@ -34,10 +37,10 @@ scene.add(light);
  */
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: 1280,
-  sourceHeight: 960,
-  displayWidth: 1280,
-  displayHeight: 960,
+  sourceWidth: width,
+  sourceHeight: height,
+  displayWidth: width,
+  displayHeight: height,
 });
 
 arToolkitSource.init(function onReady() {
@@ -72,12 +75,12 @@ function onResize() {
 const arToolkitContext = new THREEx.ArToolkitContext(
   {
     detectionMode: "mono",
-    canvasWidth: 1280,
-    canvasHeight: 960,
+    canvasWidth: width,
+    canvasHeight: height,
   },
   {
-    sourceWidth: 1280,
-    sourceHeight: 960,
+    sourceWidth: width,
+    sourceHeight: height,
   }
 );
 
