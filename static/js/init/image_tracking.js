@@ -72,8 +72,8 @@ function onResize() {
 const arToolkitContext = new THREEx.ArToolkitContext(
   {
     detectionMode: "mono",
-    canvasWidth: "100dvw",
-    canvasHeight: "90dvh",
+    canvasWidth: 1280,
+    canvasHeight: 960,
   },
   {
     sourceWidth: 1280,
