@@ -45,9 +45,9 @@ const arToolkitSource = new THREEx.ArToolkitSource({
 
 arToolkitSource.init(function onReady() {
   // use a resize to fullscreen mobile devices
-  setTimeout(function () {
-    onResize();
-  }, 1000);
+  // setTimeout(function () {
+  //   onResize();
+  // }, 1000);
 });
 
 // handle resize
