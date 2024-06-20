@@ -76,8 +76,8 @@ const arToolkitContext = new THREEx.ArToolkitContext(
     canvasHeight: "90dvh",
   },
   {
-    sourceWidth: "100dvw",
-    sourceHeight: "90dvh",
+    sourceWidth: 1280,
+    sourceHeight: 960,
   }
 );
 
