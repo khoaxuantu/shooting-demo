@@ -34,8 +34,10 @@ scene.add(light);
  */
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: 480,
-  sourceHeight: 640,
+  sourceWidth: 1280,
+  sourceHeight: 960,
+  displayWidth: 1280,
+  displayHeight: 960,
 });
 
 arToolkitSource.init(function onReady() {
@@ -70,12 +72,12 @@ function onResize() {
 const arToolkitContext = new THREEx.ArToolkitContext(
   {
     detectionMode: "mono",
-    canvasWidth: 480,
-    canvasHeight: 640,
+    canvasWidth: "100dvw",
+    canvasHeight: "90dvh",
   },
   {
-    sourceWidth: 480,
-    sourceHeight: 640,
+    sourceWidth: 1280,
+    sourceHeight: 960,
   }
 );
 
@@ -89,7 +91,7 @@ arToolkitContext.init(function onCompleted() {
  */
 const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
   type: "nft",
-  descriptorsUrl: "/static/nft/pinball",
+  descriptorsUrl: "./static/nft/pinball",
   changeMatrixMode: "cameraTransformMatrix",
 });
 
