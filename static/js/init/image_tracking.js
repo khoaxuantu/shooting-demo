@@ -40,10 +40,10 @@ scene.add(light);
  */
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: width,
-  sourceHeight: height,
-  displayWidth: width,
-  displayHeight: height,
+  sourceWidth: 1280,
+  sourceHeight: 720,
+  displayWidth: 1280,
+  displayHeight: 720,
 });
 
 arToolkitSource.init(function onReady() {
@@ -78,12 +78,12 @@ function onResize() {
 const arToolkitContext = new THREEx.ArToolkitContext(
   {
     detectionMode: "mono",
-    canvasWidth: width,
-    canvasHeight: height,
+    canvasWidth: 1280,
+    canvasHeight: 720,
   },
   {
-    sourceWidth: width,
-    sourceHeight: height,
+    sourceWidth: 1280,
+    sourceHeight: 720,
   }
 );
 
