@@ -18,7 +18,10 @@ renderer.setSize(width, height);
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.top = "0px";
 renderer.domElement.style.left = "0px";
-document.body.appendChild(renderer.domElement);
+
+window.addEventListener("DOMContentLoaded", () => {
+  document.body.appendChild(renderer.domElement);
+});
 
 // init scene and camera
 const scene = new THREE.Scene();
@@ -171,8 +174,10 @@ function takeScreenshot() {
   loadImages(sources, function (images) {
     context.drawImage(images.secondImage, 0, 0);
     context.drawImage(images.firstImage, 0, 0);
-    img.src = doubleImageCanvas.toDataURL("image/png");
-    w.document.body.appendChild(img);
+    const a = document.createElement("a");
+    a.href = doubleImageCanvas.toDataURL("image/png");
+    a.download = "canvas.png";
+    a.click();
   });
 
   // renderer.render(scene, camera);
