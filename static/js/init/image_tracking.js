@@ -162,7 +162,6 @@ threeGLTFLoader.load("./static/Flamingo.glb", function (gltf) {
 function takeScreenshot() {
   var w = window.open("", "");
   w.document.title = "Screenshot";
-  var img = new Image();
   renderer.render(scene, camera);
   var doubleImageCanvas = document.getElementById("doubleImage");
   var context = doubleImageCanvas.getContext("2d");
