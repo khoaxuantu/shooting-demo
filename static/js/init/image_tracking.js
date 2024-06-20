@@ -34,10 +34,10 @@ scene.add(light);
  */
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: 720,
-  sourceHeight: 1280,
-  displayWidth: 720,
-  displayHeight: 1280,
+  sourceWidth: 1280,
+  sourceHeight: 960,
+  displayWidth: 1280,
+  displayHeight: 960,
 });
 
 arToolkitSource.init(function onReady() {
