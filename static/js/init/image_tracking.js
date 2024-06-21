@@ -1,5 +1,5 @@
-const width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-const height = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+const width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+const height = window.innerHeight > 0 ? window.innerHeight : screen.height;
 
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -40,23 +40,23 @@ scene.add(light);
  */
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: 1280,
-  sourceHeight: 960,
-  displayWidth: 1280,
-  displayHeight: 960,
+  sourceWidth: width,
+  sourceHeight: height,
+  displayWidth: width,
+  displayHeight: height,
 });
 
 arToolkitSource.init(function onReady() {
   // use a resize to fullscreen mobile devices
-  setTimeout(function () {
-    onResize();
-  }, 1000);
+  // setTimeout(function () {
+  //   onResize();
+  // }, 200);
 });
 
 // handle resize
-window.addEventListener("resize", function () {
-  onResize();
-});
+// window.addEventListener("resize", function () {
+//   onResize();
+// });
 
 // listener for end loading of NFT marker
 window.addEventListener("arjs-nft-loaded", function (ev) {
@@ -78,12 +78,12 @@ function onResize() {
 const arToolkitContext = new THREEx.ArToolkitContext(
   {
     detectionMode: "mono",
-    canvasWidth: 1280,
-    canvasHeight: 960,
+    canvasWidth: width,
+    canvasHeight: height,
   },
   {
-    sourceWidth: 1280,
-    sourceHeight: 960,
+    sourceWidth: width,
+    sourceHeight: height,
   }
 );
 
@@ -97,7 +97,7 @@ arToolkitContext.init(function onCompleted() {
  */
 const markerControls = new THREEx.ArMarkerControls(arToolkitContext, camera, {
   type: "nft",
-  descriptorsUrl: "./static/nft/pinball",
+  descriptorsUrl: "/static/nft/pinball",
   changeMatrixMode: "cameraTransformMatrix",
 });
 
@@ -169,17 +169,21 @@ function takeScreenshot() {
     firstImage: renderer.domElement.toDataURL("image/png"),
     secondImage: arToolkitContext.arController.canvas.toDataURL("image/png"),
   };
+  var img = new Image();
 
   loadImages(sources, function (images) {
     context.drawImage(images.secondImage, 0, 0);
     context.drawImage(images.firstImage, 0, 0);
+    img.src = doubleImageCanvas.toDataURL("image/png");
+    w.document.body.appendChild(img);
     const a = document.createElement("a");
-    a.href = doubleImageCanvas.toDataURL("image/png");
+    renderer.render(scene, camera);
+    a.href = doubleImageCanvas.toDataURL();
     a.download = "canvas.png";
     a.click();
   });
 
-  // renderer.render(scene, camera);
+
   // renderer.domElement.toBlob(
   //   function (blob) {
   //     var a = document.createElement("a");
@@ -191,9 +195,11 @@ function takeScreenshot() {
   //   "image/png",
   //   1.0
   // );
+
 }
 
 function loadImages(sources, callback) {
+  console.log("🚀 ~ loadImages ~ sources:", sources);
   var images = {};
   var loadedImages = 0;
   var numImages = 0;
@@ -211,4 +217,3 @@ function loadImages(sources, callback) {
     images[src].src = sources[src];
   }
 }
-
