@@ -2,15 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
     <title>Test Image Tracking</title>
     <link rel="stylesheet" href="./static/css/style.css" />
     <script src="./vendor/three.js/build/three.min.js"></script>
     <script src="./vendor/three.js/GLTFLoader.js"></script>
     <script src="./static/js/build/ar-threex.js"></script>
     <script src="./static/js/init/image_tracking.js"></script>
+  </head>
   <body>
-    <canvas style="visibility:hidden" id="doubleImage"></canvas>
+    <canvas style="visibility: hidden" id="doubleImage"></canvas>
     <button id="screenshot" onclick="takeScreenshot()"></button>
   </body>
 </html>
