@@ -8,10 +8,10 @@
     <script src="./vendor/three.js/build/three.min.js"></script>
     <script src="./vendor/three.js/GLTFLoader.js"></script>
     <script src="./static/js/build/ar-threex.js"></script>
-    <script type="module" src="./static/js/init/image_tracking.js"></script>
-    <script src="./static/js/screenshot.js"></script>
+    <script src="./static/js/init/marker_based.js"></script>
   </head>
   <body>
-    <canvas width="640" height="480" style="visibility: hidden" id="doubleImage"></canvas>
+    <canvas style="visibility: hidden" id="doubleImage"></canvas>
+    <button id="screenshot" onclick="takeScreenshot()"></button>
   </body>
 </html>
