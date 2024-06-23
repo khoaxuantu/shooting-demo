@@ -1,5 +1,11 @@
+const RESOLUTION = {
+  WIDTH: 720,
+  HEIGHT: 1280,
+};
 const width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+console.log("🚀 ~ width:", width)
 const height = window.innerHeight > 0 ? window.innerHeight : screen.height;
+console.log("🚀 ~ height:", height)
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
@@ -28,8 +34,8 @@ scene.add(markerGroup);
 
 const arToolkitSource = new THREEx.ArToolkitSource({
   sourceType: "webcam",
-  sourceWidth: 960,
-  sourceHeight: 1280,
+  sourceWidth: RESOLUTION.WIDTH,
+  sourceHeight: RESOLUTION.HEIGHT,
   displayWidth: width,
   displayHeight: height,
 });
@@ -47,18 +53,18 @@ arToolkitSource.init(() => {
   });
 
   window.arToolkitSource = arToolkitSource;
-  onResize();
+  // onResize();
 });
 
 // handle resize
-window.addEventListener("resize", function () {
-  onResize();
-});
+// window.addEventListener("resize", function () {
+//   onResize();
+// });
 
 function onResize() {
   arToolkitSource.onResizeElement();
   arToolkitSource.copyElementSizeTo(renderer.domElement);
-  if (window.arToolkitContext.arController !== null) {
+  if (window.arToolkitContext?.arController !== null) {
     arToolkitSource.copyElementSizeTo(window.arToolkitContext.arController.canvas);
   }
 }
@@ -71,11 +77,7 @@ function initARContext() {
     {
       detectionMode: "mono",
       canvasWidth: width,
-      canvasHeight: height,
-    },
-    {
-      sourceWidth: width,
-      sourceHeight: height,
+      canvasHeight: width, // Due to video aspect ratio 1:1
     }
   );
 
