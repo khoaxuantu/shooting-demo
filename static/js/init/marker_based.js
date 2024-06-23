@@ -3,9 +3,9 @@ const RESOLUTION = {
   HEIGHT: 1280,
 };
 const width = window.innerWidth > 0 ? window.innerWidth : screen.width;
-console.log("🚀 ~ width:", width)
+console.log("🚀 ~ width:", width);
 const height = window.innerHeight > 0 ? window.innerHeight : screen.height;
-console.log("🚀 ~ height:", height)
+console.log("🚀 ~ height:", height);
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
@@ -73,13 +73,12 @@ function initARContext() {
   console.log("initARContext()");
 
   // CONTEXT
-  arToolkitContext = new THREEx.ArToolkitContext(
-    {
-      detectionMode: "mono",
-      canvasWidth: width,
-      canvasHeight: width, // Due to video aspect ratio 1:1
-    }
-  );
+  arToolkitContext = new THREEx.ArToolkitContext({
+    detectionMode: "mono",
+    canvasWidth: width,
+    canvasHeight:
+      width / (arToolkitSource.domElement.videoWidth / arToolkitSource.domElement.videoHeight), // Due to video aspect ratio 1:1
+  });
 
   arToolkitContext.init(() => {
     camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
