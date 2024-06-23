@@ -11,9 +11,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.top = "0px";
 renderer.domElement.style.left = "0px";
-window.addEventListener("DOMContentLoaded", () => {
-  document.body.appendChild(renderer.domElement);
-});
 
 // array of functions for the rendering loop
 const onRenderFcts = [];
@@ -29,10 +26,13 @@ scene.add(camera);
 markerGroup = new THREE.Group();
 scene.add(markerGroup);
 
-const artoolkitProfile = new THREEx.ArToolkitProfile();
-artoolkitProfile.sourceWebcam();
-
-const arToolkitSource = new THREEx.ArToolkitSource(artoolkitProfile.sourceParameters);
+const arToolkitSource = new THREEx.ArToolkitSource({
+  sourceType: "webcam",
+  sourceWidth: 960,
+  sourceHeight: 1280,
+  displayWidth: width,
+  displayHeight: height,
+});
 
 arToolkitSource.init(() => {
   arToolkitSource.domElement.addEventListener("canplay", () => {
@@ -67,7 +67,17 @@ function initARContext() {
   console.log("initARContext()");
 
   // CONTEXT
-  arToolkitContext = new THREEx.ArToolkitContext(artoolkitProfile.contextParameters);
+  arToolkitContext = new THREEx.ArToolkitContext(
+    {
+      detectionMode: "mono",
+      canvasWidth: width,
+      canvasHeight: height,
+    },
+    {
+      sourceWidth: width,
+      sourceHeight: height,
+    }
+  );
 
   arToolkitContext.init(() => {
     camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
@@ -82,7 +92,7 @@ function initARContext() {
   // MARKER
   arMarkerControls = new THREEx.ArMarkerControls(arToolkitContext, markerGroup, {
     type: "pattern",
-    patternUrl: THREEx.ArToolkitContext.baseURL + "/static/marker/patt.hiro",
+    patternUrl: "/static/marker/patt.hiro",
   });
 
   console.log("ArMarkerControls", arMarkerControls);
@@ -146,7 +156,6 @@ onRenderFcts.push(function (delta) {
 });
 
 var stats = new Stats();
-document.body.appendChild(stats.dom);
 // render the scene
 onRenderFcts.push(function () {
   renderer.render(scene, camera);
@@ -169,58 +178,20 @@ requestAnimationFrame(function animate(nowMsec) {
 });
 
 function takeScreenshot() {
-  var w = window.open("", "");
-  w.document.title = "Screenshot";
-  renderer.render(scene, camera);
-  var doubleImageCanvas = document.getElementById("doubleImage");
-  var context = doubleImageCanvas.getContext("2d");
   var sources = {
     firstImage: renderer.domElement.toDataURL("image/png"),
     secondImage: arToolkitContext.arController.canvas.toDataURL("image/png"),
   };
-  var img = new Image();
 
-  loadImages(sources, function (images) {
-    context.drawImage(images.secondImage, 0, 0);
-    context.drawImage(images.firstImage, 0, 0);
-    img.src = doubleImageCanvas.toDataURL("image/png");
-    w.document.body.appendChild(img);
-    const a = document.createElement("a");
-    renderer.render(scene, camera);
-    a.href = doubleImageCanvas.toDataURL();
-    a.download = "canvas.png";
-    a.click();
-  });
-
-  // renderer.domElement.toBlob(
-  //   function (blob) {
-  //     var a = document.createElement("a");
-  //     var url = img.src.replace(/^data:image\/[^;]+/, "data:application/octet-stream");
-  //     a.href = url;
-  //     a.download = "canvas.png";
-  //     a.click();
-  //   },
-  //   "image/png",
-  //   1.0
-  // );
+  const a = document.createElement("a");
+  renderer.render(scene, camera);
+  a.href = sources.secondImage;
+  a.download = "canvas.png";
+  a.click();
+  a.remove();
 }
 
-function loadImages(sources, callback) {
-  console.log("🚀 ~ loadImages ~ sources:", sources);
-  var images = {};
-  var loadedImages = 0;
-  var numImages = 0;
-  // get num of sources
-  for (var src in sources) {
-    numImages++;
-  }
-  for (var src in sources) {
-    images[src] = new Image();
-    images[src].onload = function () {
-      if (++loadedImages >= numImages) {
-        callback(images);
-      }
-    };
-    images[src].src = sources[src];
-  }
-}
+window.addEventListener("DOMContentLoaded", () => {
+  document.body.appendChild(renderer.domElement);
+  document.body.appendChild(stats.dom);
+});
