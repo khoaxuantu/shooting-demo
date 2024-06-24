@@ -4,27 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MindAR - Test image tracking</title>
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
     <link rel="stylesheet" href="../static/css/style.css" />
   </head>
   <body>
     <a-scene
-      mindar-image="imageTargetSrc: ../static/targets.mind;"
+      mindar-image="imageTargetSrc: ../static/targets.mind; uiScanning:no;"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
     >
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-assets>
+        <img src="../static/gifs/cat_spin.gif" id="catModel">
+      </a-assets>
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane
-          color="blue"
-          opaciy="0.5"
-          position="0 0 0"
-          height="0.552"
-          width="1"
-          rotation="0 0 0"
-        ></a-plane>
+        <a-entity
+          geometry="primitive:plane"
+          material="shader:gif;src:#catModel;"
+        ></a-entity>
       </a-entity>
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
     </a-scene>
   </body>
 </html>
