@@ -1,51 +1,46 @@
+const RESOLUTION_SCALE = 1;
+
 function takeScreenshot() {
-  var w = window.open("", "");
-  w.document.title = "Screenshot";
-  var img = new Image();
-  renderer.render(scene, camera);
-  var doubleImageCanvas = document.getElementById("doubleImage");
-  var context = doubleImageCanvas.getContext("2d");
-  var sources = {
-    firstImage: renderer.domElement.toDataURL("image/png"),
-    secondImage: arToolkitContext.arController.canvas.toDataURL("image/png"),
-  };
+  const video = document.querySelector("video");
+  const canvas = document.createElement("canvas");
 
-  loadImages(sources, function (images) {
-    context.drawImage(images.secondImage, 0, 0);
-    context.drawImage(images.firstImage, 0, 0);
-    img.src = doubleImageCanvas.toDataURL("image/png");
-    w.document.body.appendChild(img);
-  });
+  let vWidth = video.clientWidth * RESOLUTION_SCALE;
+  let vHeight = video.clientHeight * RESOLUTION_SCALE;
 
-  // renderer.render(scene, camera);
-  // renderer.domElement.toBlob(
-  //   function (blob) {
-  //     var a = document.createElement("a");
-  //     var url = img.src.replace(/^data:image\/[^;]+/, "data:application/octet-stream");
-  //     a.href = url;
-  //     a.download = "canvas.png";
-  //     a.click();
-  //   },
-  //   "image/png",
-  //   1.0
-  // );
+  canvas.width = vWidth;
+  canvas.height = vHeight;
+
+  const element = document.querySelector("video");
+  const style = window.getComputedStyle(element);
+  const top = style.getPropertyValue("top");
+
+  canvas.getContext("2d").drawImage(video, 0, parseFloat(top), vWidth, vHeight);
+
+  const imgData = document.querySelector("a-scene").components.screenshot.getCanvas("perspective");
+
+  canvas.getContext("2d").drawImage(imgData, 0, 0, vWidth, vHeight);
+
+  downloadScreenshot(canvas);
 }
 
-function loadImages(sources, callback) {
-  var images = {};
-  var loadedImages = 0;
-  var numImages = 0;
-  // get num of sources
-  for (var src in sources) {
-    numImages++;
-  }
-  for (var src in sources) {
-    images[src] = new Image();
-    images[src].onload = function () {
-      if (++loadedImages >= numImages) {
-        callback(images);
-      }
-    };
-    images[src].src = sources[src];
-  }
+function downloadScreenshot(canvas) {
+  const a = document.createElement("a");
+  a.href = canvas.toDataURL("image/png");
+  a.download = imageName();
+  a.click();
+}
+
+function imageName() {
+  return `demo_${formatDate(new Date())}.png`;
+}
+
+function formatDate(date) {
+  return new Intl.DateTimeFormat("vi-VN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
 }
