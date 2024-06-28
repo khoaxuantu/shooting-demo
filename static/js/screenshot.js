@@ -31,16 +31,21 @@ function downloadScreenshot(canvas) {
 }
 
 function imageName() {
-  return `demo_${formatDate(new Date())}.png`;
+  return `demo_${getUUID()}.png`;
 }
 
-function formatDate(date) {
-  return new Intl.DateTimeFormat("vi-VN", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  }).format(date);
+function getUUID() {
+  const uuid = window.crypto.randomUUID();
+  return uuid.split("-")[0] ?? uuid;
 }
+
+// function formatDate(date) {
+//   return new Intl.DateTimeFormat("vi-VN", {
+//     year: "numeric",
+//     month: "2-digit",
+//     day: "2-digit",
+//     hour: "2-digit",
+//     minute: "2-digit",
+//     second: "2-digit",
+//   }).format(date);
+// }
