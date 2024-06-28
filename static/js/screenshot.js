@@ -1,4 +1,4 @@
-const RESOLUTION_SCALE = 1;
+const RESOLUTION_SCALE = 2;
 
 function takeScreenshot() {
   const video = document.querySelector("video");
