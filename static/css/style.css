@@ -24,4 +24,5 @@ a:hover {
   right: 50dvw;
   left: 50dvw;
   border: 5px solid;
+  transform: translateX(-50%);
 }
